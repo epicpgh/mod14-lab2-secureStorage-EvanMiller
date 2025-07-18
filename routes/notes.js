@@ -1,11 +1,13 @@
 import express from "express";
 import  Note  from "../models/Notes.js";
 import { authMiddleware } from "../utils/auth.js";
+import verifyJWT from "../../use-auth/middleware/verifyJWT.js";
 
 const router = express.Router();
 
 // Apply authMiddleware to all routes in this file
 router.use(authMiddleware);
+router.use(verifyJWT);
 
 // GET /api/notes - Get all notes for the logged-in user
 // THIS IS THE ROUTE THAT CURRENTLY HAS THE FLAW
