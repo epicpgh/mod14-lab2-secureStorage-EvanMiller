@@ -1,13 +1,12 @@
 import express from "express";
 import User from "../models/User.js";
 import { signToken } from "../utils/auth.js";
-import verifyJWT from "../../use-auth/middleware/verifyJWT.js";
 import passport from "../config/passport.js"
 
 const router = express.Router();
 
 // POST /api/users/register - Create a new user
-router.post("/register", verifyJWT, async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     const user = await User.create(req.body);
     const token = signToken(user);
@@ -18,7 +17,7 @@ router.post("/register", verifyJWT, async (req, res) => {
 });
 
 // POST /api/users/login - Authenticate a user and return a token
-router.post("/login", verifyJWT, async (req, res) => {
+router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
